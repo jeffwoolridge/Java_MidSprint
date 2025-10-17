@@ -47,39 +47,41 @@ public class MedicationTrackingSystem {
     }
 
     private void search() {
-        System.out.print("Search for (patient/doctor/medication): ");
-        String type = scanner.nextLine().toLowerCase();
-        System.out.print("Enter name to search: ");
-        String name = scanner.nextLine().toLowerCase();
+    System.out.print("Search for (patient/doctor/medication): ");
+    String type = scanner.nextLine().toLowerCase();
 
-        switch (type) {
-            case "patient" ->
-                patients.stream()
-                    .filter(p -> p.getName().toLowerCase().contains(name))
-                    .forEach(System.out::println);
-                
-            case "doctor" ->
-                doctors.stream()
-                    .filter(d -> d.getName().toLowerCase().contains(name))
-                    .forEach(System.out::println);
-                
-            case "medication" ->
-                medications.stream()
-                    .filter(m -> m.getName().toLowerCase().contains(name))
-                    .forEach(System.out::println);
-            
-            default ->
-                System.out.println("Invalid search type.");
+    System.out.print("Enter name to search: ");
+    String name = scanner.nextLine().toLowerCase(); // ✅ Only declare once
+
+    switch (type) {
+        case "patient" ->
+            patients.stream()
+                .filter(p -> p.getName().toLowerCase().contains(name))
+                .forEach(this::printPatientWithDoctors); // ✅ optionally print with doctors
+        
+        case "doctor" ->
+            doctors.stream()
+                .filter(d -> d.getName().toLowerCase().contains(name))
+                .forEach(System.out::println);
+        
+        case "medication" ->
+            medications.stream()
+                .filter(m -> m.getName().toLowerCase().contains(name))
+                .forEach(System.out::println);
+        
+        default ->
+            System.out.println("Invalid search type.");
         }
     }
 
-        private void addPatientToDoctor() {
-            Doctor doctor = findDoctorById();
-            Patient patient = findPatientById();
 
-            if (doctor != null && patient != null) {
-                doctor.addPatient(patient);
-                System.out.println("Patient added to doctor.");
+    private void addPatientToDoctor() {
+        Doctor doctor = findDoctorById();
+        Patient patient = findPatientById();
+
+        if (doctor != null && patient != null) {
+            doctor.addPatient(patient);
+            System.out.println("Patient added to doctor.");
         }
     }
 
@@ -103,37 +105,136 @@ public class MedicationTrackingSystem {
         String type = scanner.nextLine().toLowerCase();
 
         switch (type) {
-            case "patient" ->
-                editList(patients);
-            
-            case "doctor" -> 
-                editList(doctors);
-                
-            case "medication" ->
-                editList(medications);
-            
-            default ->
-                System.out.println("Invalid type.");
+            case "patient" -> {
+                System.out.print("Enter patient ID: ");
+                String id = scanner.nextLine();
+                Patient patient = patients.stream()
+                    .filter(p -> p.getId().equals(id))
+                    .findFirst()
+                    .orElse(null);
+
+                if (patient != null) {
+                    System.out.print("Edit or delete? ");
+                    String action = scanner.nextLine().toLowerCase();
+                    if (action.equals("delete")) {
+                        patients.remove(patient);
+                        System.out.println("Patient deleted.");
+                    } else if (action.equals("edit")) {
+                        editPatient(patient);
+                    }
+                } else {
+                    System.out.println("Patient not found.");
+                }
+            }
+
+            case "doctor" -> {
+                System.out.print("Enter doctor ID: ");
+                String id = scanner.nextLine();
+                Doctor doctor = doctors.stream()
+                    .filter(d -> d.getId().equals(id))
+                    .findFirst()
+                    .orElse(null);
+
+                if (doctor != null) {
+                    System.out.print("Edit or delete? ");
+                    String action = scanner.nextLine().toLowerCase();
+                    if (action.equals("delete")) {
+                        doctors.remove(doctor);
+                        System.out.println("Doctor deleted.");
+                    } else if (action.equals("edit")) {
+                        editDoctor(doctor);
+                    }
+                } else {
+                    System.out.println("Doctor not found.");
+                }
+            }
+
+            case "medication" -> {
+                System.out.print("Enter medication ID: ");
+                String id = scanner.nextLine();
+                Medication medication = medications.stream()
+                    .filter(m -> m.getId().equals(id))
+                    .findFirst()
+                    .orElse(null);
+
+                if (medication != null) {
+                    System.out.print("Edit or delete? ");
+                    String action = scanner.nextLine().toLowerCase();
+                    if (action.equals("delete")) {
+                        medications.remove(medication);
+                        System.out.println("Medication deleted.");
+                    } else if (action.equals("edit")) {
+                        editMedication(medication);
+                    }
+                } else {
+                    System.out.println("Medication not found.");
+                }
+            }
+
+            default -> System.out.println("Invalid type.");
         }
     }
 
-    private <T extends Identifiable> void editList(List<T> list) {
-        System.out.print("Enter ID to edit/delete: ");
-        String id = scanner.nextLine();
-        T item = list.stream().filter(i -> i.getId().equals(id)).findFirst().orElse(null);
 
-        if (item != null) {
-            System.out.print("Edit or delete? ");
-            String action = scanner.nextLine().toLowerCase();
-            if (action.equals("delete")) {
-                list.remove(item);
-                System.out.println("Deleted.");
-            } else if (action.equals("edit")) {
-                System.out.println("Editing not implemented yet.");
-            }
-        } else {
-            System.out.println("Item not found.");
+
+    private void editMedication(Medication medication) {
+        System.out.print("Enter new name (current: " + medication.getName() + "): ");
+        String newName = scanner.nextLine();
+        if (!newName.isEmpty()) {
+            medication.setName(newName);
         }
+
+        System.out.print("Enter new quantity (current: " + medication.getQuantity() + "): ");
+        String qtyInput = scanner.nextLine();
+        if (!qtyInput.isEmpty()) {
+            try {
+                int newQty = Integer.parseInt(qtyInput);
+                medication.setQuantity(newQty);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid quantity entered. Skipping update.");
+            }
+        }
+
+        System.out.println("Medication updated.");
+    }
+
+
+    private void editDoctor(Doctor doctor) {
+        System.out.print("Enter new name (current: " + doctor.getName() + "): ");
+        String newName = scanner.nextLine();
+        if (!newName.isEmpty()) {
+            doctor.setName(newName);
+        }
+
+        System.out.println("Doctor updated.");
+    }
+
+
+    private void editPatient(Patient patient) {
+        System.out.print("Enter new name (current: " + patient.getName() + "): ");
+        String newName = scanner.nextLine();
+        if (!newName.isEmpty()) {
+            patient.setName(newName);
+        }
+
+        System.out.print("Enter new age (current: " + patient.getAge() + "): ");
+        String ageInput = scanner.nextLine();
+        if (!ageInput.isEmpty()) {
+            try {
+                int newAge = Integer.parseInt(ageInput);
+                patient.setAge(newAge);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid age entered. Skipping update.");
+            }
+        }
+
+        System.out.print("Enter new phone number (current: " + patient.getPhoneNumber() + "): ");
+        String phoneInput = scanner.nextLine();
+        if (!phoneInput.isEmpty()) {
+            patient.setPhoneNumber(phoneInput);
+        }
+
+        System.out.println("Patient updated.");
     }
 
     private void generateReport() {
@@ -225,7 +326,7 @@ public class MedicationTrackingSystem {
     }
 
     private void addPatientInteractive() {
-    System.out.print("Enter Patient ID: ");
+        System.out.print("Enter Patient ID: ");
         String id = scanner.nextLine();
 
         System.out.print("Enter Patient Name: ");
@@ -237,18 +338,32 @@ public class MedicationTrackingSystem {
         System.out.print("Enter Patient Phone Number: ");
         String phoneNumber = scanner.nextLine();
 
-        // Create a patient object
+        // create Patient
         Patient patient = new Patient(id, name, age, phoneNumber);
 
-    // Add to the system
+    // aDD to system
     addPatient(patient);
 
     System.out.println("Patient added successfully.");
-    }
-
-
 }
 
+
+    private void printPatientWithDoctors(Patient patient) {
+        System.out.println(patient);
+
+        System.out.print("Doctors: ");
+        List<Doctor> doctorsForPatient = doctors.stream()
+            .filter(d -> d.getPatients().contains(patient))
+            .toList();
+
+        if (doctorsForPatient.isEmpty()) {
+            System.out.println("None");
+        } else {
+            doctorsForPatient.forEach(d -> System.out.println("  " + d));
+        }
+
+    }
+}
     
 
 

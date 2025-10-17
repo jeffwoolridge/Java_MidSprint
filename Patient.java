@@ -36,12 +36,8 @@ public class Patient extends Person implements Identifiable {
 
     @Override
     public String toString() {
-        return "Patient{" +
-           "id='" + id + '\'' +
-           ", name='" + name + '\'' +
-           ", age=" + age +
-           ", phoneNumber='" + phoneNumber + '\'' +
-           '}';
-}
+        return "Patient{id='" + getId() + "', name='" + getName() + "', age=" + getAge() + "}";
+    }
+
 
 }

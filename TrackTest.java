@@ -1,4 +1,5 @@
 import java.util.UUID;
+import java.util.Date;
 
 public class TrackTest {
     public static void main(String[] args) {
@@ -12,7 +13,8 @@ public class TrackTest {
         Patient johnDoe = new Patient("P1", "John Doe", 0, "333-333-3333");
 
         // Mock Medications (
-        Medication aspirin = new Medication("M1", "Aspirin", "500mg", 100);
+        //Date expiry = new Date(); // or some valid Date
+        Medication aspirin = new Medication("id1", "Aspirin", 10, new Date());
         
         // Add to system
         system.addDoctor(drSmith);

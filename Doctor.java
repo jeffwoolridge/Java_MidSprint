@@ -19,6 +19,7 @@ public class Doctor extends Person implements Identifiable {
 
     @Override
     public String toString() {
-        return "Doctor{id='" + getId() + "', name='" + getName() + "'}";
-    }
+    return "Doctor{id='" + getId() + "', name='" + getName() + "', patients=" + patients + "}";
+}
+
 }
