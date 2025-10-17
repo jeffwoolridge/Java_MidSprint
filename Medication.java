@@ -19,17 +19,35 @@ public class Medication {
     }
 
     // Getters
-    public String getId() { return id; }
-    public String getName() { return name; }
-    public String getDose() { return dose; }
-    public int getQuantityInStock() { return quantityInStock; }
-    public LocalDate getExpiryDate() { return expiryDate; }
+    public String getId() { 
+        return id; 
+    }
+    public String getName() { 
+        return name; 
+    }
+    public String getDose() { 
+        return dose; 
+    }
+    public int getQuantityInStock() { 
+        return quantityInStock; 
+    }
+    public LocalDate getExpiryDate() { 
+        return expiryDate; 
+    }
 
     // Setters
-    public void setName(String name) { this.name = name; }
-    public void setDose(String dose) { this.dose = dose; }
-    public void setQuantityInStock(int quantityInStock) { this.quantityInStock = quantityInStock; }
-    public void setExpiryDate(LocalDate expiryDate) { this.expiryDate = expiryDate; }
+    public void setName(String name) { 
+        this.name = name; 
+    }
+    public void setDose(String dose) { 
+        this.dose = dose; 
+    }
+    public void setQuantityInStock(int quantityInStock) { 
+        this.quantityInStock = quantityInStock;
+    }
+    public void setExpiryDate(LocalDate expiryDate) { 
+        this.expiryDate = expiryDate; 
+    }
 
     // Check if expired
     public boolean isExpired() {

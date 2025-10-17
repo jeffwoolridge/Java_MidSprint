@@ -15,8 +15,13 @@ public class Patient extends Person {
     }
 
     // Getters
-    public List<Medication> getMedications() { return medications; }
-    public List<Prescription> getPrescriptions() { return prescriptions; }
+    public List<Medication> getMedications() { 
+        return medications;
+     
+    }
+    public List<Prescription> getPrescriptions() { 
+        return prescriptions; 
+    }
 
     // Add medication
     public void addMedication(Medication medication) {
