@@ -283,7 +283,7 @@ public class MedicationTrackingSystem {
         });
     }
 
-    // Utility methods
+    
     private Doctor findDoctorById() {
         System.out.print("Enter doctor ID: ");
         String id = scanner.nextLine();
