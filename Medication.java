@@ -1,62 +1,64 @@
-import java.time.LocalDate;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Date;
 
 public class Medication implements Identifiable {
-
     private final String id;
     private String name;
-    private String dose;
-    private int quantityInStock;
-    private LocalDate expiryDate;
+    private int quantity;
+    private Date expiryDate;
 
-    // Constructor with random expiry date
-    public Medication(String id, String name, String dose, int quantityInStock) {
+    // Constructor
+    public Medication(String id, String name, int quantity, Date expiryDate) {
         this.id = id;
         this.name = name;
-        this.dose = dose;
-        this.quantityInStock = quantityInStock;
-        this.expiryDate = generateRandomExpiryDate();
+        this.quantity = quantity;
+        this.expiryDate = expiryDate;
     }
+
 
     // Getters
-    public String getId() { 
-        return id; 
-    }
-    public String getName() { 
-        return name; 
-    }
-    public String getDose() { 
-        return dose; 
-    }
-    public int getQuantityInStock() { 
-        return quantityInStock; 
-    }
-    public LocalDate getExpiryDate() { 
-        return expiryDate; 
+    @Override
+    public String getId() {
+        return id;
     }
 
-    // Check if expired
+    public String getName() {
+        return name;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public Date getExpiryDate() {
+        return expiryDate;
+    }
+
+    // Setters - Needed for editing functionality
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setExpiryDate(Date expiryDate) {
+        this.expiryDate = expiryDate;
+    }
+
+    // Expiration check
     public boolean isExpired() {
-        return LocalDate.now().isAfter(expiryDate);
+        return expiryDate.before(new Date());
     }
 
-    // Restock method
+    // Restock
     public void restock(int amount) {
-        this.quantityInStock += amount;
+        this.quantity += amount;
     }
 
-    // Random expiry date between 10 years in the past or future
-    private static LocalDate generateRandomExpiryDate() {
-        LocalDate start = LocalDate.now().minusYears(100);
-        LocalDate end = LocalDate.now().plusYears(100);
-        long startEpochDay = start.toEpochDay();
-        long endEpochDay = end.toEpochDay();
-        long randomEpochDay = ThreadLocalRandom.current().nextLong(startEpochDay, endEpochDay + 1);
-        return LocalDate.ofEpochDay(randomEpochDay);
+    @Override
+    public String toString() {
+        return "Medication{id='" + id + "', name='" + name + "', quantity=" + quantity +
+               ", expiryDate=" + expiryDate + "}";
     }
-
-
 }
-
-
-
