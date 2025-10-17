@@ -15,7 +15,6 @@ public class TrackTest {
         // Mock Medications (
         Medication aspirin = new Medication("M1", "Aspirin", "500mg", 100);
         
-
         // Add to system
         system.addDoctor(drSmith);
         system.addDoctor(drJones);
@@ -26,7 +25,7 @@ public class TrackTest {
         system.addMedication(aspirin);
         
 
-        //  Add sample prescription
+        // Add sample prescription
         Prescription pres = new Prescription(UUID.randomUUID().toString(), drSmith, johnDoe, aspirin);
         system.addPrescription(pres);
         johnDoe.addPrescription(pres);
