@@ -21,11 +21,23 @@ public class Prescription {
     }
 
     // Getters
-    public String getId() { return id; }
-    public Doctor getDoctor() { return doctor; }
-    public Patient getPatient() { return patient; }
-    public Medication getMedication() { return medication; }
-    public LocalDate getDateIssued() { return dateIssued; }
-    public LocalDate getExpiryDate() { return expiryDate; }
+    public String getId() { 
+        return id; 
+    }
+    public Doctor getDoctor() { 
+        return doctor; 
+    }
+    public Patient getPatient() { 
+        return patient; 
+    }
+    public Medication getMedication() { 
+        return medication; 
+    }
+    public LocalDate getDateIssued() { 
+        return dateIssued; 
+    }
+    public LocalDate getExpiryDate() { 
+        return expiryDate; 
+    }
 
 }
