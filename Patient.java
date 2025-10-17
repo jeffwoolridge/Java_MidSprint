@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Patient extends Person {
+public class Patient extends Person implements Identifiable {
 
     // Instance variables
     private final List<Medication> medications;
@@ -34,4 +34,5 @@ public class Patient extends Person {
     public void addPrescription(Prescription prescription) {
         prescriptions.add(prescription);
     }
+
 }
