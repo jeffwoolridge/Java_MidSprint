@@ -19,7 +19,8 @@ public class MedicationTrackingSystem {
             System.out.println("6. Check Expired Medications");
             System.out.println("7. Print Prescriptions by Doctor");
             System.out.println("8. Restock Medications");
-            System.out.println("9. Exit \n");
+            System.out.println("9. Add Doctor");
+            System.out.println("10. Exit \n");
             System.out.print("Enter choice: ");
             String choice = scanner.nextLine();
 
@@ -32,7 +33,8 @@ public class MedicationTrackingSystem {
                 case "6" -> checkExpiredMedications();
                 case "7" -> printPrescriptionsByDoctor();
                 case "8" -> restockMedications();
-                case "9" -> {
+                case "9" -> addDoctorInteractive();
+                case "10" -> {
                     System.out.println("Exiting...");
                     return; 
     }
@@ -207,5 +209,19 @@ public class MedicationTrackingSystem {
         MedicationTrackingSystem system = new MedicationTrackingSystem();
         system.start();
     }
+
+    private void addDoctorInteractive() {
+    System.out.print("Enter Doctor ID: ");
+    String id = scanner.nextLine();
+
+    System.out.print("Enter Doctor Name: ");
+    String name = scanner.nextLine();
+
+    Doctor doctor = new Doctor(id, name);
+    doctors.add(doctor);
+    System.out.println("Doctor added successfully.");
+}
+
+
 }
 

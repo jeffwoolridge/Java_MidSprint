@@ -6,11 +6,14 @@ public class Doctor extends Person implements Identifiable {
     private String specialization;
     private final List<Patient> patients;
 
-    public Doctor(String id, String name, int age, String phoneNumber, String specialization) {
-        super(id, name, age, phoneNumber);
-        this.specialization = specialization;
+    public Doctor(String id, String name) {
+        super(id, name, 0, ""); // Provide dummy values for age and phone number
+        this.specialization = "";
         this.patients = new ArrayList<>();
     }
+
+
+    
 
     public String getSpecialization() {
         return specialization;

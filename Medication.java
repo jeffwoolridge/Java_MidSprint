@@ -4,10 +4,10 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Medication implements Identifiable {
 
     private final String id;
-    private String name;
-    private String dose;
+    private final String name;
+    private final String dose;
     private int quantityInStock;
-    private LocalDate expiryDate;
+    private final LocalDate expiryDate;
 
     // Constructor with random expiry date
     public Medication(String id, String name, String dose, int quantityInStock) {
@@ -19,9 +19,11 @@ public class Medication implements Identifiable {
     }
 
     // Getters
+    @Override
     public String getId() { 
         return id; 
     }
+    
     public String getName() { 
         return name; 
     }

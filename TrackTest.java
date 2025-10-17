@@ -5,8 +5,8 @@ public class TrackTest {
         MedicationTrackingSystem system = new MedicationTrackingSystem();
 
         // Mock Doctors 
-        Doctor drSmith = new Doctor("D1", "Dr. Smith", 45, "Cardiology", "Male");
-        Doctor drJones = new Doctor("D2", "Dr. Jones", 50, "Neurology", "Female");
+        Doctor drSmith = new Doctor("D1", "Dr. Smith");
+        Doctor drJones = new Doctor("D2", "Dr. Jones");
 
         // Mock Patients 
         Patient johnDoe = new Patient("P1", "John Doe", 43, "Male");
@@ -24,7 +24,6 @@ public class TrackTest {
 
         system.addMedication(aspirin);
         
-
         // Add sample prescription
         Prescription pres = new Prescription(UUID.randomUUID().toString(), drSmith, johnDoe, aspirin);
         system.addPrescription(pres);
