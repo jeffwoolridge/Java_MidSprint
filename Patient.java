@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 
 public class Patient extends Person implements Identifiable {
@@ -10,8 +9,8 @@ public class Patient extends Person implements Identifiable {
     // Constructor
     public Patient(String id, String name, int age, String phoneNumber) {
         super(id, name, age, phoneNumber);
-        this.medications = new ArrayList<>();
-        this.prescriptions = new ArrayList<>();
+        this.prescriptions = null;
+        this.medications = null;
     }
 
     // Getters
@@ -34,5 +33,15 @@ public class Patient extends Person implements Identifiable {
     public void addPrescription(Prescription prescription) {
         prescriptions.add(prescription);
     }
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+           "id='" + id + '\'' +
+           ", name='" + name + '\'' +
+           ", age=" + age +
+           ", phoneNumber='" + phoneNumber + '\'' +
+           '}';
+}
 
 }

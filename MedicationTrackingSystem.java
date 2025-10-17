@@ -12,29 +12,31 @@ public class MedicationTrackingSystem {
         while (true) {
             System.out.println("\n\n Medication Tracking System \n");
             System.out.println("1. Search");
-            System.out.println("2. Add Patient to Doctor");
-            System.out.println("3. Accept Prescription");
-            System.out.println("4. Edit or Delete");
-            System.out.println("5. Generate Report");
-            System.out.println("6. Check Expired Medications");
-            System.out.println("7. Print Prescriptions by Doctor");
-            System.out.println("8. Restock Medications");
-            System.out.println("9. Add Doctor");
-            System.out.println("10. Exit \n");
+            System.out.println("2. Add Doctor");
+            System.out.println("3. Add Patient");
+            System.out.println("4. Add Patient to Doctor");
+            System.out.println("5. Accept Prescription");
+            System.out.println("6. Edit or Delete");
+            System.out.println("7. Generate Report");
+            System.out.println("8. Check Expired Medications");
+            System.out.println("9. Print Prescriptions by Doctor");
+            System.out.println("10. Restock Medications");
+            System.out.println("11. Exit \n");
             System.out.print("Enter choice: ");
             String choice = scanner.nextLine();
 
             switch (choice) {
                 case "1" -> search();
-                case "2" -> addPatientToDoctor();
-                case "3" -> acceptPrescription();
-                case "4" -> editOrDelete();
-                case "5" -> generateReport();
-                case "6" -> checkExpiredMedications();
-                case "7" -> printPrescriptionsByDoctor();
-                case "8" -> restockMedications();
-                case "9" -> addDoctorInteractive();
-                case "10" -> {
+                case "2" -> addDoctorInteractive();
+                case "3" -> addPatientInteractive();
+                case "4" -> addPatientToDoctor();
+                case "5" -> acceptPrescription();
+                case "6" -> editOrDelete();
+                case "7" -> generateReport();
+                case "8" -> checkExpiredMedications();
+                case "9" -> printPrescriptionsByDoctor();
+                case "10" -> restockMedications();
+                case "11" -> {
                     System.out.println("Exiting...");
                     return; 
     }
@@ -71,13 +73,13 @@ public class MedicationTrackingSystem {
         }
     }
 
-    private void addPatientToDoctor() {
-        Doctor doctor = findDoctorById();
-        Patient patient = findPatientById();
+        private void addPatientToDoctor() {
+            Doctor doctor = findDoctorById();
+            Patient patient = findPatientById();
 
-        if (doctor != null && patient != null) {
-            doctor.addPatient(patient);
-            System.out.println("Patient added to doctor.");
+            if (doctor != null && patient != null) {
+                doctor.addPatient(patient);
+                System.out.println("Patient added to doctor.");
         }
     }
 
@@ -211,17 +213,43 @@ public class MedicationTrackingSystem {
     }
 
     private void addDoctorInteractive() {
-    System.out.print("Enter Doctor ID: ");
-    String id = scanner.nextLine();
+        System.out.print("Enter Doctor ID: ");
+        String id = scanner.nextLine();
 
-    System.out.print("Enter Doctor Name: ");
-    String name = scanner.nextLine();
+        System.out.print("Enter Doctor Name: ");
+        String name = scanner.nextLine();
 
-    Doctor doctor = new Doctor(id, name);
-    doctors.add(doctor);
-    System.out.println("Doctor added successfully.");
+        Doctor doctor = new Doctor(id, name);
+        addDoctor(doctor);
+        System.out.println("Doctor added successfully.");
+    }
+
+    private void addPatientInteractive() {
+    System.out.print("Enter Patient ID: ");
+        String id = scanner.nextLine();
+
+        System.out.print("Enter Patient Name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter Patient Age: ");
+        int age = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Enter Patient Phone Number: ");
+        String phoneNumber = scanner.nextLine();
+
+        // Create a patient object
+        Patient patient = new Patient(id, name, age, phoneNumber);
+
+    // Add to the system
+    addPatient(patient);
+
+    System.out.println("Patient added successfully.");
+    }
+
+
 }
 
+    
 
-}
+
 

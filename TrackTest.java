@@ -9,8 +9,7 @@ public class TrackTest {
         Doctor drJones = new Doctor("D2", "Dr. Jones");
 
         // Mock Patients 
-        Patient johnDoe = new Patient("P1", "John Doe", 43, "Male");
-        Patient janeRoe = new Patient("P2", "Jane Roe", 32, "Female");
+        Patient johnDoe = new Patient("P1", "John Doe", 0, "333-333-3333");
 
         // Mock Medications (
         Medication aspirin = new Medication("M1", "Aspirin", "500mg", 100);
@@ -19,8 +18,6 @@ public class TrackTest {
         system.addDoctor(drSmith);
         system.addDoctor(drJones);
 
-        system.addPatient(johnDoe);
-        system.addPatient(janeRoe);
 
         system.addMedication(aspirin);
         

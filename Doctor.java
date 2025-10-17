@@ -3,20 +3,10 @@ import java.util.List;
 
 public class Doctor extends Person implements Identifiable {
 
-    private String specialization;
-    private final List<Patient> patients;
+    private final List<Patient> patients = new ArrayList<>();
 
     public Doctor(String id, String name) {
-        super(id, name, 0, ""); // Provide dummy values for age and phone number
-        this.specialization = "";
-        this.patients = new ArrayList<>();
-    }
-
-
-    
-
-    public String getSpecialization() {
-        return specialization;
+        super(id, name, 0, null);  // default age and phone if needed
     }
 
     public List<Patient> getPatients() {
@@ -27,14 +17,8 @@ public class Doctor extends Person implements Identifiable {
         patients.add(patient);
     }
 
-    public void setSpecialization(String specialization) {
-        this.specialization = specialization;
-    }
-
     @Override
     public String toString() {
-        return "Doctor{id='" + id + "', name='" + name + "'}";
+        return "Doctor{id='" + getId() + "', name='" + getName() + "'}";
     }
-
 }
-
