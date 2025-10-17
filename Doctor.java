@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Doctor extends Person {
+public class Doctor extends Person implements Identifiable {
 
     private String specialization;
     private final List<Patient> patients;
@@ -21,14 +21,17 @@ public class Doctor extends Person {
     }
 
     public void addPatient(Patient patient) {
-        if (!patients.contains(patient)) {
-            patients.add(patient);
-
-    }}
+        patients.add(patient);
+    }
 
     public void setSpecialization(String specialization) {
         this.specialization = specialization;
+    }
+
+    @Override
+    public String toString() {
+        return "Doctor{id='" + id + "', name='" + name + "'}";
+    }
+
 }
- 
- }
 

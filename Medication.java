@@ -1,7 +1,7 @@
 import java.time.LocalDate;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Medication {
+public class Medication implements Identifiable {
 
     private final String id;
     private String name;
@@ -54,4 +54,9 @@ public class Medication {
         long randomEpochDay = ThreadLocalRandom.current().nextLong(startEpochDay, endEpochDay + 1);
         return LocalDate.ofEpochDay(randomEpochDay);
     }
+
+
 }
+
+
+
