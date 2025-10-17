@@ -21,13 +21,16 @@ public class Doctor extends Person implements Identifiable {
     }
 
     public void addPatient(Patient patient) {
-        if (!patients.contains(patient)) {
-            patients.add(patient);
-
-    }}
+        patients.add(patient);
+    }
 
     public void setSpecialization(String specialization) {
         this.specialization = specialization;
+    }
+
+    @Override
+    public String toString() {
+        return "Doctor{id='" + id + "', name='" + name + "'}";
     }
 
 }

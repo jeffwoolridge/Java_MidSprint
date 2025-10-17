@@ -10,7 +10,7 @@ public class MedicationTrackingSystem {
 
     public void start() {
         while (true) {
-            System.out.println("\n=== Medication Tracking System ===");
+            System.out.println("\n\n Medication Tracking System \n");
             System.out.println("1. Search");
             System.out.println("2. Add Patient to Doctor");
             System.out.println("3. Accept Prescription");
@@ -19,7 +19,7 @@ public class MedicationTrackingSystem {
             System.out.println("6. Check Expired Medications");
             System.out.println("7. Print Prescriptions by Doctor");
             System.out.println("8. Restock Medications");
-            System.out.println("9. Exit");
+            System.out.println("9. Exit \n");
             System.out.print("Enter choice: ");
             String choice = scanner.nextLine();
 
@@ -32,9 +32,13 @@ public class MedicationTrackingSystem {
                 case "6" -> checkExpiredMedications();
                 case "7" -> printPrescriptionsByDoctor();
                 case "8" -> restockMedications();
-                case "9" -> System.out.println("Exiting...");
-                default -> System.out.println("Invalid choice.");
-            }
+                case "9" -> {
+                    System.out.println("Exiting...");
+                    return; 
+    }
+            default -> System.out.println("Invalid choice.");
+}
+
         }
     }
 
@@ -181,6 +185,22 @@ public class MedicationTrackingSystem {
         System.out.print("Enter medication ID: ");
         String id = scanner.nextLine();
         return medications.stream().filter(m -> m.getId().equals(id)).findFirst().orElse(null);
+    }
+
+    public void addDoctor(Doctor doctor) {
+    doctors.add(doctor);
+    }
+
+    public void addPatient(Patient patient) {
+        patients.add(patient);
+    }
+
+    public void addMedication(Medication medication) {
+        medications.add(medication);
+    }
+
+    public void addPrescription(Prescription prescription) {
+        prescriptions.add(prescription);
     }
 
     public static void main(String[] args) {
