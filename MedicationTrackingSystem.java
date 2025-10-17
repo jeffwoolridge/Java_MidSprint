@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.*;
 
 public class MedicationTrackingSystem {
@@ -7,6 +8,8 @@ public class MedicationTrackingSystem {
     private final List<Medication> medications = new ArrayList<>();
     private final List<Prescription> prescriptions = new ArrayList<>();
     private final Scanner scanner = new Scanner(System.in);
+    private int prescriptionCounter = 1; // Add this at the top of your class
+
 
     public void start() {
         while (true) {
@@ -15,13 +18,14 @@ public class MedicationTrackingSystem {
             System.out.println("2. Add Doctor");
             System.out.println("3. Add Patient");
             System.out.println("4. Add Patient to Doctor");
-            System.out.println("5. Accept Prescription");
-            System.out.println("6. Edit or Delete");
-            System.out.println("7. Generate Report");
-            System.out.println("8. Check Expired Medications");
-            System.out.println("9. Print Prescriptions by Doctor");
-            System.out.println("10. Restock Medications");
-            System.out.println("11. Exit \n");
+            System.out.println("5. Add Medication");
+            System.out.println("6. Accept Prescription");
+            System.out.println("7. Edit or Delete");
+            System.out.println("8. Generate Report");
+            System.out.println("9. Check Expired Medications");
+            System.out.println("10. Print Prescriptions by Doctor");
+            System.out.println("11. Restock Medications");
+            System.out.println("12. Exit \n");
             System.out.print("Enter choice: ");
             String choice = scanner.nextLine();
 
@@ -30,18 +34,20 @@ public class MedicationTrackingSystem {
                 case "2" -> addDoctorInteractive();
                 case "3" -> addPatientInteractive();
                 case "4" -> addPatientToDoctor();
-                case "5" -> acceptPrescription();
-                case "6" -> editOrDelete();
-                case "7" -> generateReport();
-                case "8" -> checkExpiredMedications();
-                case "9" -> printPrescriptionsByDoctor();
-                case "10" -> restockMedications();
-                case "11" -> {
+                case "5" -> addMedicationInteractive(); 
+                case "6" -> acceptPrescription();
+                case "7" -> editOrDelete();
+                case "8" -> generateReport();           
+                case "9" -> checkExpiredMedications();  
+                case "10" -> printPrescriptionsByDoctor();
+                case "11" -> restockMedications();
+                case "12" -> {
                     System.out.println("Exiting...");
-                    return; 
-    }
-            default -> System.out.println("Invalid choice.");
-}
+                    return;
+                }
+                default -> System.out.println("Invalid choice.");
+            }
+
 
         }
     }
@@ -91,14 +97,18 @@ public class MedicationTrackingSystem {
         Medication medication = findMedicationById();
 
         if (doctor != null && patient != null && medication != null) {
-            String presId = UUID.randomUUID().toString();
+            String presId = "RX" + String.format("%03d", prescriptionCounter++);
             Prescription pres = new Prescription(presId, doctor, patient, medication);
             prescriptions.add(pres);
             patient.addPrescription(pres);
             patient.addMedication(medication);
-            System.out.println("Prescription added.");
+            System.out.println("Prescription added with ID: " + presId);
+        } else {
+            System.out.println("Doctor, patient, or medication not found. Prescription not added.");
         }
     }
+
+
 
     private void editOrDelete() {
         System.out.print("Edit or delete (patient/doctor/medication): ");
@@ -308,11 +318,6 @@ public class MedicationTrackingSystem {
         prescriptions.add(prescription);
     }
 
-    public static void main(String[] args) {
-        MedicationTrackingSystem system = new MedicationTrackingSystem();
-        system.start();
-    }
-
     private void addDoctorInteractive() {
         System.out.print("Enter Doctor ID: ");
         String id = scanner.nextLine();
@@ -346,6 +351,26 @@ public class MedicationTrackingSystem {
 
     System.out.println("Patient added successfully.");
 }
+    private void addMedicationInteractive() {
+        System.out.print("Enter Medication ID: ");
+        String id = scanner.nextLine();
+
+        System.out.print("Enter Medication Name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter Medication Quantity: ");
+        int quantity = Integer.parseInt(scanner.nextLine());
+
+        
+        int randomDays = new Random().nextInt(701) + 30; 
+        LocalDate expiryDate = LocalDate.now().plusDays(randomDays);
+        Date expiry = java.sql.Date.valueOf(expiryDate);
+        System.out.println("Generated expiry date: " + expiryDate);
+
+        Medication medication = new Medication(id, name, quantity, expiry);
+        addMedication(medication);
+        System.out.println("Medication added successfully.");
+    }
 
 
     private void printPatientWithDoctors(Patient patient) {
@@ -362,6 +387,11 @@ public class MedicationTrackingSystem {
             doctorsForPatient.forEach(d -> System.out.println("  " + d));
         }
 
+    }
+
+    public static void main(String[] args) {
+        MedicationTrackingSystem system = new MedicationTrackingSystem();
+        system.start();
     }
 }
     
