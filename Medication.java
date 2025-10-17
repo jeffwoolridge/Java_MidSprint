@@ -1,21 +1,21 @@
 import java.time.LocalDate;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Medication {
 
-    // Instance variables
     private final String id;
     private String name;
     private String dose;
     private int quantityInStock;
     private LocalDate expiryDate;
 
-    // Constructor
-    public Medication(String id, String name, String dose, int quantityInStock, LocalDate expiryDate) {
+    // Constructor with random expiry date
+    public Medication(String id, String name, String dose, int quantityInStock) {
         this.id = id;
         this.name = name;
         this.dose = dose;
         this.quantityInStock = quantityInStock;
-        this.expiryDate = expiryDate;
+        this.expiryDate = generateRandomExpiryDate();
     }
 
     // Getters
@@ -35,27 +35,23 @@ public class Medication {
         return expiryDate; 
     }
 
-    // Setters
-    public void setName(String name) { 
-        this.name = name; 
-    }
-    public void setDose(String dose) { 
-        this.dose = dose; 
-    }
-    public void setQuantityInStock(int quantityInStock) { 
-        this.quantityInStock = quantityInStock;
-    }
-    public void setExpiryDate(LocalDate expiryDate) { 
-        this.expiryDate = expiryDate; 
-    }
-
     // Check if expired
     public boolean isExpired() {
         return LocalDate.now().isAfter(expiryDate);
     }
 
-    // Restock medication
+    // Restock method
     public void restock(int amount) {
         this.quantityInStock += amount;
+    }
+
+    // Random expiry date between 10 years in the past or future
+    private static LocalDate generateRandomExpiryDate() {
+        LocalDate start = LocalDate.now().minusYears(100);
+        LocalDate end = LocalDate.now().plusYears(100);
+        long startEpochDay = start.toEpochDay();
+        long endEpochDay = end.toEpochDay();
+        long randomEpochDay = ThreadLocalRandom.current().nextLong(startEpochDay, endEpochDay + 1);
+        return LocalDate.ofEpochDay(randomEpochDay);
     }
 }
