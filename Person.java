@@ -15,10 +15,6 @@ public class Person {
         this.phoneNumber = phoneNumber;
     }
 
-    public Person(String id2, String name2, String age2, String phoneNumber2) {
-        //TODO Auto-generated constructor stub
-    }
-
     // Getters
     public String getId() { 
         return id; 

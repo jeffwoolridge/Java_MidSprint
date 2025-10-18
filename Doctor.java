@@ -6,7 +6,7 @@ public class Doctor extends Person implements Identifiable {
     private final List<Patient> patients = new ArrayList<>();
 
     public Doctor(String id, String name) {
-        super(id, name, 0, null);  // default age and phone if needed
+        super(id, name, 0, null);  
     }
 
     public List<Patient> getPatients() {
