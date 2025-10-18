@@ -22,7 +22,8 @@ public class Prescription {
     public Doctor getDoctor() { return doctor; }
     public Patient getPatient() { return patient; }
     public Medication getMedication() { return medication; }
-    public LocalDate getDateIssued() { return dateIssued; }
+
+    public LocalDate getIssuedDate() { return dateIssued; } // ✅ Fixed method
     public LocalDate getExpiryDate() { return expiryDate; }
 
     @Override
@@ -33,10 +34,5 @@ public class Prescription {
                ", medication=" + medication.getName() + 
                ", issued=" + dateIssued + 
                ", expires=" + expiryDate + "}";
-    }
-
-    public LocalDate getIssuedDate() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getIssuedDate'");
     }
 }
