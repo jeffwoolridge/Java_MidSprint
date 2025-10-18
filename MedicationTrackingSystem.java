@@ -9,8 +9,7 @@ public class MedicationTrackingSystem {
     private final List<Medication> medications = new ArrayList<>();
     private final List<Prescription> prescriptions = new ArrayList<>();
     private final Scanner scanner = new Scanner(System.in);
-    private int prescriptionCounter = 1; // Add this at the top of your class
-
+    private int prescriptionCounter = 1; 
     public void start() {
         while (true) {
             System.out.println("\n\n Medication Tracking System \n");
@@ -398,8 +397,6 @@ public class MedicationTrackingSystem {
             }
         }
     }
-
-
 
     public static void main(String[] args) {
         MedicationTrackingSystem system = new MedicationTrackingSystem();
