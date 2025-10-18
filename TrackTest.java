@@ -1,36 +1,57 @@
 import java.util.UUID;
-import java.util.Date;
+import java.time.LocalDate;
+import java.sql.Date;
 
 public class TrackTest {
     public static void main(String[] args) {
+        // Initialize the Medication Tracking System
         MedicationTrackingSystem system = new MedicationTrackingSystem();
 
-        // Mock Doctors 
-        Doctor drSmith = new Doctor("D1", "Dr. Smith");
-        Doctor drJones = new Doctor("D2", "Dr. Jones");
+        // Create mock doctors
+        Doctor drDave = new Doctor("D1", "Dr. Dave");
+        Doctor drSteve = new Doctor("D2", "Dr. Steve");
+        Doctor drDre = new Doctor("D3", "Dr. Dre");
+        Doctor drEvil = new Doctor("D4", "Dr. Evil");
 
-        // Mock Patients 
-        Patient johnDoe = new Patient("P1", "John Doe", 0, "333-333-3333");
+        // Create mock patients
+        Patient jeffWoolridge = new Patient("P1", "Jeff Woolridge", 22, "333-333-3333");
+        Patient jamesBond = new Patient("P2", "James Bond", 12, "709-823-8283");
 
-        // Mock Medications (
-        //Date expiry = new Date(); // or some valid Date
-        Medication aspirin = new Medication("id1", "Aspirin", 10, new Date());
-        
-        // Add to system
-        system.addDoctor(drSmith);
-        system.addDoctor(drJones);
+        // Create a medication with a future expiry date
+        LocalDate expiryLocalDate = LocalDate.now().plusMonths(6); // expires in 6 months
+        Date expiryDate = Date.valueOf(expiryLocalDate);
+        Medication aspirin = new Medication("M1", "Aspirin", 10, expiryDate);
 
+        // Add doctors and patients to the system
+        system.addDoctor(drDave);
+        system.addDoctor(drSteve);
+        system.addDoctor(drDre);
+        system.addDoctor(drEvil);
 
+        system.addPatient(jeffWoolridge);
+        system.addPatient(jamesBond);
+
+        // Link patients to doctors
+        drDave.addPatient(jeffWoolridge);
+        drSteve.addPatient(jamesBond);
+
+        // Add medication to system
         system.addMedication(aspirin);
-        
-        // Add sample prescription
-        Prescription pres = new Prescription(UUID.randomUUID().toString(), drSmith, johnDoe, aspirin);
-        system.addPrescription(pres);
-        johnDoe.addPrescription(pres);
-        johnDoe.addMedication(aspirin);
 
-        // Start system
+        // Create and add a sample prescription
+        Prescription pres = new Prescription(
+            UUID.randomUUID().toString(),
+            drDave,
+            jeffWoolridge,
+            aspirin
+        );
+
+        // Add prescription to system and patient
+        system.addPrescription(pres);
+        jeffWoolridge.addPrescription(pres);
+        jeffWoolridge.addMedication(aspirin);
+
+        // Start the interactive system
         system.start();
     }
 }
-

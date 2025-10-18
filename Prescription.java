@@ -23,7 +23,7 @@ public class Prescription {
     public Patient getPatient() { return patient; }
     public Medication getMedication() { return medication; }
 
-    public LocalDate getIssuedDate() { return dateIssued; } // ✅ Fixed method
+    public LocalDate getIssuedDate() { return dateIssued; } 
     public LocalDate getExpiryDate() { return expiryDate; }
 
     @Override

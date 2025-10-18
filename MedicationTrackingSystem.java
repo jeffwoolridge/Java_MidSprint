@@ -386,7 +386,7 @@ public class MedicationTrackingSystem {
         return medications.stream().filter(m -> m.getId().equals(id)).findFirst().orElse(null);
     }
 
-    // Direct add methods (non-interactive)
+    // Direct add methods 
     public void addDoctor(Doctor doctor) { doctors.add(doctor); }
     public void addPatient(Patient patient) { patients.add(patient); }
     public void addMedication(Medication medication) { medications.add(medication); }
