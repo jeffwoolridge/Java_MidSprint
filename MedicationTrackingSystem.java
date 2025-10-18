@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class MedicationTrackingSystem {
 
@@ -9,7 +10,6 @@ public class MedicationTrackingSystem {
     private final List<Prescription> prescriptions = new ArrayList<>();
     private final Scanner scanner = new Scanner(System.in);
     private int prescriptionCounter = 1; // Add this at the top of your class
-
 
     public void start() {
         while (true) {
@@ -24,8 +24,9 @@ public class MedicationTrackingSystem {
             System.out.println("8. Generate Report");
             System.out.println("9. Check Expired Medications");
             System.out.println("10. Print Prescriptions by Doctor");
-            System.out.println("11. Restock Medications");
-            System.out.println("12. Exit \n");
+            System.out.println("11. Print Patients' Prescription For the Last Year");
+            System.out.println("12. Restock Medications");
+            System.out.println("13. Exit \n");
             System.out.print("Enter choice: ");
             String choice = scanner.nextLine();
 
@@ -40,15 +41,14 @@ public class MedicationTrackingSystem {
                 case "8" -> generateReport();           
                 case "9" -> checkExpiredMedications();  
                 case "10" -> printPrescriptionsByDoctor();
-                case "11" -> restockMedications();
-                case "12" -> {
+                case "11" -> printPatientYearlyPrescriptionReport();
+                case "12" -> restockMedications();
+                case "13" -> {
                     System.out.println("Exiting...");
                     return;
                 }
                 default -> System.out.println("Invalid choice.");
             }
-
-
         }
     }
 
@@ -57,13 +57,13 @@ public class MedicationTrackingSystem {
     String type = scanner.nextLine().toLowerCase();
 
     System.out.print("Enter name to search: ");
-    String name = scanner.nextLine().toLowerCase(); // ✅ Only declare once
+    String name = scanner.nextLine().toLowerCase(); 
 
     switch (type) {
         case "patient" ->
             patients.stream()
                 .filter(p -> p.getName().toLowerCase().contains(name))
-                .forEach(this::printPatientWithDoctors); // ✅ optionally print with doctors
+                .forEach(this::printPatientWithDoctors); 
         
         case "doctor" ->
             doctors.stream()
@@ -79,7 +79,6 @@ public class MedicationTrackingSystem {
             System.out.println("Invalid search type.");
         }
     }
-
 
     private void addPatientToDoctor() {
         Doctor doctor = findDoctorById();
@@ -107,8 +106,6 @@ public class MedicationTrackingSystem {
             System.out.println("Doctor, patient, or medication not found. Prescription not added.");
         }
     }
-
-
 
     private void editOrDelete() {
         System.out.print("Edit or delete (patient/doctor/medication): ");
@@ -184,8 +181,6 @@ public class MedicationTrackingSystem {
             default -> System.out.println("Invalid type.");
         }
     }
-
-
 
     private void editMedication(Medication medication) {
         System.out.print("Enter new name (current: " + medication.getName() + "): ");
@@ -283,7 +278,6 @@ public class MedicationTrackingSystem {
         });
     }
 
-    
     private Doctor findDoctorById() {
         System.out.print("Enter doctor ID: ");
         String id = scanner.nextLine();
@@ -361,7 +355,6 @@ public class MedicationTrackingSystem {
         System.out.print("Enter Medication Quantity: ");
         int quantity = Integer.parseInt(scanner.nextLine());
 
-        
         int randomDays = new Random().nextInt(701) + 30; 
         LocalDate expiryDate = LocalDate.now().plusDays(randomDays);
         Date expiry = java.sql.Date.valueOf(expiryDate);
@@ -371,7 +364,6 @@ public class MedicationTrackingSystem {
         addMedication(medication);
         System.out.println("Medication added successfully.");
     }
-
 
     private void printPatientWithDoctors(Patient patient) {
         System.out.println(patient);
@@ -386,8 +378,28 @@ public class MedicationTrackingSystem {
         } else {
             doctorsForPatient.forEach(d -> System.out.println("  " + d));
         }
-
     }
+
+    private void printPatientYearlyPrescriptionReport() {
+        System.out.println("--- Patient Prescriptions in the Last Year ---");
+        LocalDate oneYearAgo = LocalDate.now().minusYears(1);
+
+        for (Patient patient : patients) {
+            List<Prescription> recentPrescriptions = patient.getPrescriptions().stream()
+                .filter(p -> p.getIssuedDate().isAfter(oneYearAgo))
+                .collect(Collectors.toList());  // Use collect(Collectors.toList()) instead of toList()
+
+            if (!recentPrescriptions.isEmpty()) {
+                System.out.println("Patient: " + patient.getName() + " (ID: " + patient.getId() + ")");
+                recentPrescriptions.forEach(p -> 
+                    System.out.println("  Medication: " + p.getMedication().getName())
+                );
+                System.out.println();
+            }
+        }
+    }
+
+
 
     public static void main(String[] args) {
         MedicationTrackingSystem system = new MedicationTrackingSystem();

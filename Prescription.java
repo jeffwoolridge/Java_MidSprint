@@ -34,4 +34,9 @@ public class Prescription {
                ", issued=" + dateIssued + 
                ", expires=" + expiryDate + "}";
     }
+
+    public LocalDate getIssuedDate() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getIssuedDate'");
+    }
 }
